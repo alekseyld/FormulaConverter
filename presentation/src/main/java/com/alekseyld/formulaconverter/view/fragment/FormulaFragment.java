@@ -18,7 +18,7 @@ import com.alekseyld.formulaconverter.R;
 import com.alekseyld.formulaconverter.entity.Formula;
 import com.alekseyld.formulaconverter.internal.di.component.MainComponent;
 import com.alekseyld.formulaconverter.listeners.FormulaChangeListener;
-import com.alekseyld.formulaconverter.presenter.MainPresenter;
+import com.alekseyld.formulaconverter.presenter.FormulaPresenter;
 import com.alekseyld.formulaconverter.view.MainView;
 import com.alekseyld.formulaconverter.view.fragment.base.BaseFragment;
 
@@ -30,7 +30,7 @@ import io.github.kexanie.library.MathView;
  * Created by Alekseyld on 02.09.2016.
  */
 
-public class FormulaFragment extends BaseFragment<MainPresenter> implements MainView {
+public class FormulaFragment extends BaseFragment<FormulaPresenter> implements MainView {
 
     @BindView(R.id.formula_view)
     MathView mathView;
@@ -51,6 +51,7 @@ public class FormulaFragment extends BaseFragment<MainPresenter> implements Main
         ButterKnife.bind(this, v);
 
         getActivity().setTitle(R.string.app_name);
+        setHasOptionsMenu(true);
 
         inputEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -90,7 +91,8 @@ public class FormulaFragment extends BaseFragment<MainPresenter> implements Main
 
         switch (item.getItemId()){
             case R.id.action_result:
-                //// TODO: 24.09.2017  
+                //// TODO: 24.09.2017
+                mPresenter.calculateExp();
                 break;
         }
 

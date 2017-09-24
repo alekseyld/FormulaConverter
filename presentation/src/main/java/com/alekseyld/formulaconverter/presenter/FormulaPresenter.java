@@ -9,9 +9,13 @@ import javax.inject.Inject;
  * Created by Alekseyld on 02.09.2016.
  */
 
-public class MainPresenter extends BasePresenter<MainView> {
+public class FormulaPresenter extends BasePresenter<MainView> {
 
     @Inject
-    MainPresenter(){
+    FormulaPresenter(){
+    }
+
+    public void calculateExp() {
+
     }
 }
