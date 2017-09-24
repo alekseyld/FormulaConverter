@@ -192,6 +192,10 @@ public class ExpressionUtils {
         return map;
     }
 
+    public static String sortingStation(String expression){
+        return sortingStation(expression, MAIN_MATH_OPERATIONS, "(", ")");
+    }
+
     /**
      * Вычисляет значение выражения, записанного в инфиксной нотации. Выражение может содержать скобки, числа с
      * плавающей точкой, четыре основных математических операндов.
