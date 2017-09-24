@@ -18,10 +18,10 @@ import com.alekseyld.formulaconverter.view.fragment.base.BaseFragment;
  * Created by Alekseyld on 02.09.2016.
  */
 
-public class MainFragment extends BaseFragment<MainPresenter> implements MainView {
+public class FormulaFragment extends BaseFragment<MainPresenter> implements MainView {
 
-    public static MainFragment newInstance(){
-        return new MainFragment();
+    public static FormulaFragment newInstance(){
+        return new FormulaFragment();
     }
 
     @Nullable
@@ -29,6 +29,8 @@ public class MainFragment extends BaseFragment<MainPresenter> implements MainVie
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_main, container, false);
         getActivity().setTitle(R.string.app_name);
+
+
 
         return v;
     }
@@ -47,7 +49,7 @@ public class MainFragment extends BaseFragment<MainPresenter> implements MainVie
         if(getActivity() != null)
             Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
         else
-            Log.e("MainFragment", "Activity is null \n"+message);
+            Log.e("FormulaFragment", "Activity is null \n"+message);
     }
 
     @Override

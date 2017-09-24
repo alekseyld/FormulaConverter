@@ -1,6 +1,6 @@
 package com.alekseyld.formulaconverter.repository;
 
-import com.alekseyld.formulaconverter.entity.Entity;
+import com.alekseyld.formulaconverter.entity.Formula;
 import com.alekseyld.formulaconverter.repository.base.EntityRepository;
 
 import javax.inject.Inject;
@@ -15,12 +15,12 @@ public class EntityRepositoryImpl implements EntityRepository {
     }
 
     @Override
-    public boolean saveEntity(Entity entity) {
+    public boolean saveEntity(Formula formula) {
         return false;
     }
 
     @Override
-    public Entity getEntity() {
+    public Formula getEntity() {
         return null;
     }
 

@@ -1,6 +1,6 @@
 package com.alekseyld.formulaconverter.service;
 
-import com.alekseyld.formulaconverter.entity.Entity;
+import com.alekseyld.formulaconverter.entity.Formula;
 
 import rx.Observable;
 
@@ -10,7 +10,7 @@ import rx.Observable;
 
 public interface EntityService {
 
-    Observable<Boolean> saveEntity(Entity entity);
-    Observable<Entity> getEntity();
+    Observable<Boolean> saveEntity(Formula formula);
+    Observable<Formula> getEntity();
 
 }

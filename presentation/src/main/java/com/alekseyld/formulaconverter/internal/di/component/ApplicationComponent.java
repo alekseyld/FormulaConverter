@@ -10,8 +10,6 @@ import com.alekseyld.formulaconverter.view.activity.base.BaseActivity;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import retrofit2.Retrofit;
-
 /**
  * Created by Alekseyld on 02.09.2016.
  */
@@ -25,5 +23,4 @@ public interface ApplicationComponent {
     Context context();
     ThreadExecutor threadExecutor();
     PostExecutionThread postExecutionThread();
-    Retrofit provideRestAdapter();
 }

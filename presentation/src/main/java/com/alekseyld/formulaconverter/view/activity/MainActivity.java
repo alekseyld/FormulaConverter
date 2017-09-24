@@ -10,7 +10,7 @@ import com.alekseyld.formulaconverter.internal.di.component.DaggerMainComponent;
 import com.alekseyld.formulaconverter.internal.di.component.MainComponent;
 import com.alekseyld.formulaconverter.internal.di.module.MainModule;
 import com.alekseyld.formulaconverter.view.activity.base.BaseInjectorActivity;
-import com.alekseyld.formulaconverter.view.fragment.MainFragment;
+import com.alekseyld.formulaconverter.view.fragment.FormulaFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,7 +36,7 @@ public class MainActivity extends BaseInjectorActivity<MainComponent> {
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        addFragment(MainFragment.newInstance());
+        addFragment(FormulaFragment.newInstance());
     }
 
     @Override

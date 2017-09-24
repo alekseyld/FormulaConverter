@@ -1,6 +1,6 @@
 package com.alekseyld.formulaconverter.service;
 
-import com.alekseyld.formulaconverter.entity.Entity;
+import com.alekseyld.formulaconverter.entity.Formula;
 import com.alekseyld.formulaconverter.repository.base.EntityRepository;
 
 import javax.inject.Inject;
@@ -21,14 +21,14 @@ public class EntityServiceImpl implements EntityService {
     }
 
     @Override
-    public Observable<Boolean> saveEntity(Entity entity) {
+    public Observable<Boolean> saveEntity(Formula formula) {
         return Observable.just(
-                mEntityRepository.saveEntity(entity)
+                mEntityRepository.saveEntity(formula)
         );
     }
 
     @Override
-    public Observable<Entity> getEntity() {
+    public Observable<Formula> getEntity() {
         return Observable.just(
                 mEntityRepository.getEntity()
         );

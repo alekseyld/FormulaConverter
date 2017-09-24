@@ -1,6 +1,6 @@
 package com.alekseyld.formulaconverter.repository.base;
 
-import com.alekseyld.formulaconverter.entity.Entity;
+import com.alekseyld.formulaconverter.entity.Formula;
 
 /**
  * Created by Alekseyld on 04.09.2016.
@@ -8,7 +8,7 @@ import com.alekseyld.formulaconverter.entity.Entity;
 
 public interface EntityRepository {
 
-    boolean saveEntity(Entity entity);
-    Entity getEntity();
+    boolean saveEntity(Formula formula);
+    Formula getEntity();
 
 }

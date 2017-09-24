@@ -1,6 +1,6 @@
 package com.alekseyld.formulaconverter.usecase;
 
-import com.alekseyld.formulaconverter.entity.Entity;
+import com.alekseyld.formulaconverter.entity.Formula;
 import com.alekseyld.formulaconverter.executor.PostExecutionThread;
 import com.alekseyld.formulaconverter.executor.ThreadExecutor;
 import com.alekseyld.formulaconverter.service.EntityService;
@@ -16,7 +16,7 @@ import rx.Observable;
 
 public class SaveEntityUseCase extends UseCase<EntityService> {
 
-    private Entity entity;
+    private Formula formula;
 
     @Inject
     public SaveEntityUseCase(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread,
@@ -26,11 +26,11 @@ public class SaveEntityUseCase extends UseCase<EntityService> {
 
     @Override
     protected Observable<Boolean> buildUseCaseObservable() {
-        return mService.saveEntity(entity);
+        return mService.saveEntity(formula);
     }
 
-    public SaveEntityUseCase setEntity(Entity entity) {
-        this.entity = entity;
+    public SaveEntityUseCase setFormula(Formula formula) {
+        this.formula = formula;
         return this;
     }
 }
