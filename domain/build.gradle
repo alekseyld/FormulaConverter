@@ -1,4 +1,3 @@
-apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'java'
 
 //noinspection GroovyUnusedAssignment
@@ -22,5 +21,5 @@ dependencies {
     compile 'com.google.dagger:dagger:2.5'
     provided 'javax.annotation:jsr250-api:1.0'
     compile 'io.reactivex:rxjava:1.1.6'
-    compile 'ch.obermuhlner:big-math:1.2.1'
+    compile ('ch.obermuhlner:big-math:1.3.0')
 }

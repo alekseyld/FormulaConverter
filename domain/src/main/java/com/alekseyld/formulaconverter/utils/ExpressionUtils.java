@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 import java.util.StringTokenizer;
+import java.util.regex.Pattern;
 
 import ch.obermuhlner.math.big.BigDecimalMath;
 
@@ -24,6 +25,9 @@ import ch.obermuhlner.math.big.BigDecimalMath;
  * @version $Revision$ $Date$
  */
 public class ExpressionUtils {
+
+    public static final Pattern VAR_PATTERN = Pattern.compile("[A-Za-z][0-9A-Za-z]{0,}");
+
     /**
      * Основные математические операции и их приоритеты.
      *
@@ -171,6 +175,21 @@ public class ExpressionUtils {
      */
     private static String sortingStation(String expression, Map<String, Integer> operations) {
         return sortingStation(expression, operations, "(", ")");
+    }
+
+    public static Map<String, BigDecimal> getVars(String polishExpression){
+
+        Map<String, BigDecimal> map = new HashMap<>();
+
+        String[] items = polishExpression.split(" ");
+
+        for (String item: items){
+            if (VAR_PATTERN.matcher(item).find()){
+                map.put(item, new BigDecimal(0));
+            }
+        }
+
+        return map;
     }
 
     /**

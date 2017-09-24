@@ -30,7 +30,7 @@ public class FormulaFragment extends BaseFragment<MainPresenter> implements Main
         final View v = inflater.inflate(R.layout.fragment_main, container, false);
         getActivity().setTitle(R.string.app_name);
 
-
+        String a;
 
         return v;
     }
