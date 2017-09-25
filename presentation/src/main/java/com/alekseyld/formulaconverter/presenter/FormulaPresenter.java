@@ -2,7 +2,7 @@ package com.alekseyld.formulaconverter.presenter;
 
 import com.alekseyld.formulaconverter.entity.Formula;
 import com.alekseyld.formulaconverter.presenter.base.BasePresenter;
-import com.alekseyld.formulaconverter.view.MainView;
+import com.alekseyld.formulaconverter.view.FormulaView;
 
 import java.math.BigDecimal;
 import java.util.Map;
@@ -13,7 +13,7 @@ import javax.inject.Inject;
  * Created by Alekseyld on 02.09.2016.
  */
 
-public class FormulaPresenter extends BasePresenter<MainView> {
+public class FormulaPresenter extends BasePresenter<FormulaView> {
 
     private Formula formula = new Formula("");
 
@@ -29,7 +29,7 @@ public class FormulaPresenter extends BasePresenter<MainView> {
 
         formula.setVars(vars);
 
-        mView.showError(formula.getStringResult());
+        mView.setMathView(formula.getStringResult());
     }
 
     public Formula getFormula() {

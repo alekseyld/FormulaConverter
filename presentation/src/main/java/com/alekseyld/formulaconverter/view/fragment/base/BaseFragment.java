@@ -81,6 +81,14 @@ public abstract class BaseFragment<TPresenter extends BasePresenter> extends Fra
     }
 
     @Override
+    public void showError(String message) {
+        if(getActivity() != null)
+            Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+        else
+            Log.e("FormulaFragment", "Activity is null \n" + message);
+    }
+
+    @Override
     public Context getContext() {
         return getActivity();
     }

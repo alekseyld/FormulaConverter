@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,14 +11,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.alekseyld.formulaconverter.R;
 import com.alekseyld.formulaconverter.entity.Formula;
 import com.alekseyld.formulaconverter.internal.di.component.MainComponent;
 import com.alekseyld.formulaconverter.listeners.FormulaChangeListener;
 import com.alekseyld.formulaconverter.presenter.FormulaPresenter;
-import com.alekseyld.formulaconverter.view.MainView;
+import com.alekseyld.formulaconverter.view.FormulaView;
 import com.alekseyld.formulaconverter.view.fragment.base.BaseFragment;
 import com.alekseyld.formulaconverter.view.fragment.dialog.VariableDialogFragment;
 
@@ -31,7 +29,7 @@ import io.github.kexanie.library.MathView;
  * Created by Alekseyld on 02.09.2016.
  */
 
-public class FormulaFragment extends BaseFragment<FormulaPresenter> implements MainView {
+public class FormulaFragment extends BaseFragment<FormulaPresenter> implements FormulaView {
 
     @BindView(R.id.formula_view)
     MathView mathView;
@@ -52,6 +50,8 @@ public class FormulaFragment extends BaseFragment<FormulaPresenter> implements M
         getActivity().setTitle(R.string.app_name);
         setHasOptionsMenu(true);
 
+        getBaseActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         inputEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -70,6 +70,11 @@ public class FormulaFragment extends BaseFragment<FormulaPresenter> implements M
         });
 
         return v;
+    }
+
+    @Override
+    public void setMathView(String s) {
+        mathView.setText(s);
     }
 
     @Override
@@ -111,14 +116,6 @@ public class FormulaFragment extends BaseFragment<FormulaPresenter> implements M
 
     @Override
     public void hideLoading() {
-    }
-
-    @Override
-    public void showError(String message) {
-        if(getActivity() != null)
-            Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
-        else
-            Log.e("FormulaFragment", "Activity is null \n"+message);
     }
 
     @Override

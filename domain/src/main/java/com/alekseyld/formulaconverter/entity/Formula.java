@@ -71,6 +71,20 @@ public class Formula {
     }
 
     public String getStringResult() {
-        return ExpressionUtils.calculateExpressionWithVar(rawFormula, vars).toString();
+        StringBuilder stringBuilder = new StringBuilder(getViewFormula());
+
+        for(String key: vars.keySet()){
+            stringBuilder.append("\n")
+                    .append("$$")
+                    .append(key).append("= ").append(vars.get(key).toString())
+                    .append("$$");
+        }
+
+        stringBuilder.append("\n")
+                .append("$$")
+                .append("Result = ").append(ExpressionUtils.calculateExpressionWithVar(rawFormula, vars).toString())
+                .append("$$");
+
+        return stringBuilder.toString();
     }
 }

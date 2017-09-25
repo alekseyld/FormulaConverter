@@ -3,6 +3,7 @@ package com.alekseyld.formulaconverter.internal.di.component;
 import com.alekseyld.formulaconverter.internal.di.PerActivity;
 import com.alekseyld.formulaconverter.internal.di.module.MainModule;
 import com.alekseyld.formulaconverter.view.fragment.FormulaFragment;
+import com.alekseyld.formulaconverter.view.fragment.FormulaListFragment;
 
 import dagger.Component;
 
@@ -14,4 +15,5 @@ import dagger.Component;
 @Component(dependencies = {ApplicationComponent.class}, modules = {MainModule.class})
 public interface MainComponent {
     void inject(FormulaFragment formulaFragment);
+    void inject(FormulaListFragment fragment);
 }
