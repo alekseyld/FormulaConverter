@@ -1,6 +1,7 @@
 package com.alekseyld.formulaconverter.entity;
 
 import com.alekseyld.formulaconverter.listeners.FormulaChangeListener;
+import com.alekseyld.formulaconverter.utils.ExpressionUtils;
 
 import java.math.BigDecimal;
 import java.util.Map;
@@ -49,6 +50,12 @@ public class Formula {
         return this;
     }
 
+    public Map<String, BigDecimal> findVars(){
+        this.vars = ExpressionUtils.getVars(ExpressionUtils.sortingStation(rawFormula));
+
+        return vars;
+    }
+
     public Map<String, BigDecimal> getVars() {
         return vars;
     }
@@ -61,5 +68,9 @@ public class Formula {
     public Formula setFormulaChangeListener(FormulaChangeListener formulaChangeListener) {
         this.formulaChangeListener = formulaChangeListener;
         return this;
+    }
+
+    public String getStringResult() {
+        return ExpressionUtils.calculateExpressionWithVar(rawFormula, vars).toString();
     }
 }

@@ -21,6 +21,7 @@ import com.alekseyld.formulaconverter.listeners.FormulaChangeListener;
 import com.alekseyld.formulaconverter.presenter.FormulaPresenter;
 import com.alekseyld.formulaconverter.view.MainView;
 import com.alekseyld.formulaconverter.view.fragment.base.BaseFragment;
+import com.alekseyld.formulaconverter.view.fragment.dialog.VariableDialogFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,8 +38,6 @@ public class FormulaFragment extends BaseFragment<FormulaPresenter> implements M
 
     @BindView(R.id.input_formula)
     EditText inputEditText;
-
-    Formula formula = new Formula("");
 
     public static FormulaFragment newInstance(){
         return new FormulaFragment();
@@ -66,18 +65,23 @@ public class FormulaFragment extends BaseFragment<FormulaPresenter> implements M
 
             @Override
             public void afterTextChanged(Editable s) {
-                formula.setRawFormula(s.toString());
+                mPresenter.getFormula().setRawFormula(s.toString());
             }
         });
 
-        formula.setFormulaChangeListener(new FormulaChangeListener() {
+        return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        mPresenter.getFormula().setFormulaChangeListener(new FormulaChangeListener() {
             @Override
             public void onFormulaChange(Formula formula) {
                 mathView.setText(formula.getViewFormula());
             }
         });
-
-        return v;
     }
 
     @Override
@@ -91,8 +95,9 @@ public class FormulaFragment extends BaseFragment<FormulaPresenter> implements M
 
         switch (item.getItemId()){
             case R.id.action_result:
-                //// TODO: 24.09.2017
-                mPresenter.calculateExp();
+                VariableDialogFragment groupInputDialogFragment = VariableDialogFragment.newInstance(mPresenter);
+                groupInputDialogFragment.setTargetFragment(this, 2);
+                groupInputDialogFragment.show(getFragmentManager(), VariableDialogFragment.class.getSimpleName());
                 break;
         }
 
