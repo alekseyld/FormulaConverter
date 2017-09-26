@@ -54,6 +54,7 @@ public class FormulaListFragment extends BaseFragment<FormulaListPresenter> impl
     public void onResume() {
         super.onResume();
 
+        mFormulaAdapter.setPresenter(mPresenter);
         mPresenter.getFormulas();
     }
 
@@ -64,7 +65,7 @@ public class FormulaListFragment extends BaseFragment<FormulaListPresenter> impl
 
     @OnClick(R.id.fab)
     public void onFabClick(){
-        getBaseActivity().replaceFragment(FormulaFragment.newInstance());
+        mPresenter.openFormulaFragment(false, null);
     }
 
     @Override

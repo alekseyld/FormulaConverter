@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.alekseyld.formulaconverter.R;
+import com.daimajia.swipe.SwipeLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,6 +19,9 @@ public class FormulaViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.formula_name)
     public TextView name;
+
+    @BindView(R.id.swipe_layout)
+    public SwipeLayout swipeLayout;
 
     @BindView(R.id.formula)
     public MathView mathView;

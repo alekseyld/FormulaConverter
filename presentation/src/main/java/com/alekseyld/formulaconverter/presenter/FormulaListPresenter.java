@@ -5,6 +5,7 @@ import com.alekseyld.formulaconverter.presenter.base.BasePresenter;
 import com.alekseyld.formulaconverter.rx.subscriber.BaseSubscriber;
 import com.alekseyld.formulaconverter.usecase.GetAllFormulasUseCase;
 import com.alekseyld.formulaconverter.view.FormulaListView;
+import com.alekseyld.formulaconverter.view.fragment.FormulaFragment;
 
 import java.util.List;
 
@@ -39,5 +40,9 @@ public class FormulaListPresenter extends BasePresenter<FormulaListView> {
                 mView.hideLoading();
             }
         });
+    }
+
+    public void openFormulaFragment(boolean isView, Formula formula){
+        mView.getBaseActivity().replaceFragment(FormulaFragment.newInstance(isView, formula));
     }
 }

@@ -37,8 +37,17 @@ public class FormulaFragment extends BaseFragment<FormulaPresenter> implements F
     @BindView(R.id.input_formula)
     EditText inputEditText;
 
-    public static FormulaFragment newInstance(){
-        return new FormulaFragment();
+    boolean isView;
+
+    public static FormulaFragment newInstance(boolean isView, Formula formula){
+        FormulaFragment formulaFragment = new FormulaFragment();
+        Bundle bundle = new Bundle();
+
+        bundle.putBoolean("isView", isView);
+        bundle.putSerializable("formula", formula);
+
+        formulaFragment.setArguments(bundle);
+        return formulaFragment;
     }
 
     @Nullable
@@ -47,10 +56,23 @@ public class FormulaFragment extends BaseFragment<FormulaPresenter> implements F
         final View v = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, v);
 
-        getActivity().setTitle(R.string.app_name);
         setHasOptionsMenu(true);
 
         getBaseActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        isView = getArguments().getBoolean("isView");
+
+        if (isView) {
+            inputEditText.setEnabled(false);
+        }
+
+        Formula formula = (Formula) getArguments().getSerializable("formula");
+
+        if (formula != null){
+            getActivity().setTitle(formula.getName());
+        } else {
+            getActivity().setTitle("Создание формулы");
+        }
 
         inputEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -65,7 +87,7 @@ public class FormulaFragment extends BaseFragment<FormulaPresenter> implements F
 
             @Override
             public void afterTextChanged(Editable s) {
-                mPresenter.getFormula().setRawFormula(s.toString());
+
             }
         });
 
@@ -80,6 +102,15 @@ public class FormulaFragment extends BaseFragment<FormulaPresenter> implements F
     @Override
     public void onResume() {
         super.onResume();
+
+        if (getArguments().getSerializable("formula") != null){
+            mPresenter.setFormula((Formula) getArguments().getSerializable("formula"));
+
+            inputEditText.setText(mPresenter.getFormula().getRawFormula());
+            mathView.setText(mPresenter.getFormula().getViewFormula());
+
+            getArguments().putSerializable("formula", null);
+        }
 
         mPresenter.getFormula().setFormulaChangeListener(new FormulaChangeListener() {
             @Override

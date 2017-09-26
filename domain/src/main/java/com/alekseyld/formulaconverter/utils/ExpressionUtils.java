@@ -26,7 +26,7 @@ import ch.obermuhlner.math.big.BigDecimalMath;
  */
 public class ExpressionUtils {
 
-    public static final Pattern VAR_PATTERN = Pattern.compile("[A-Za-z][0-9A-Za-z]{0,}");
+    public static final Pattern VAR_PATTERN = Pattern.compile("[A-Za-z][_0-9A-Za-z]{0,}");
 
     /**
      * Основные математические операции и их приоритеты.
@@ -234,6 +234,8 @@ public class ExpressionUtils {
     }
 
     public static BigDecimal calculateExpressionWithVar(String expression, Map<String, BigDecimal> vars) {
+
+        // FIXME: 26.09.2017 переменные v_2 и v
         for (String varName: vars.keySet()){
             expression = expression.replaceAll(varName, vars.get(varName).toString());
         }

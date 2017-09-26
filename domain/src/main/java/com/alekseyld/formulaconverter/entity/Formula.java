@@ -3,6 +3,7 @@ package com.alekseyld.formulaconverter.entity;
 import com.alekseyld.formulaconverter.listeners.FormulaChangeListener;
 import com.alekseyld.formulaconverter.utils.ExpressionUtils;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Map;
 
@@ -10,7 +11,7 @@ import java.util.Map;
  * Created by Alekseyld on 21.09.2017.
  */
 
-public class Formula {
+public class Formula implements Serializable{
 
     private int id;
 

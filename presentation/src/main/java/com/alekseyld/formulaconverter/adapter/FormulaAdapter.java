@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.alekseyld.formulaconverter.R;
 import com.alekseyld.formulaconverter.adapter.holder.FormulaViewHolder;
 import com.alekseyld.formulaconverter.entity.Formula;
+import com.alekseyld.formulaconverter.presenter.FormulaListPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,13 @@ import java.util.List;
 
 public class FormulaAdapter extends RecyclerView.Adapter<FormulaViewHolder> {
 
+    private FormulaListPresenter mPresenter;
+
     private List<Formula> formulas = new ArrayList<>();
+
+    public void setPresenter(FormulaListPresenter mPresenter) {
+        this.mPresenter = mPresenter;
+    }
 
     @Override
     public FormulaViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -30,7 +37,14 @@ public class FormulaAdapter extends RecyclerView.Adapter<FormulaViewHolder> {
 
     @Override
     public void onBindViewHolder(FormulaViewHolder holder, int position) {
-        Formula formula = formulas.get(position);
+        final Formula formula = formulas.get(position);
+
+        holder.swipeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.openFormulaFragment(true, formula);
+            }
+        });
 
         holder.name.setText(formula.getName());
         holder.mathView.setText(formula.getViewInLineFormula());
