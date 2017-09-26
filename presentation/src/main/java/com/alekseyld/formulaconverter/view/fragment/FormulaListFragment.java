@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alekseyld.formulaconverter.R;
+import com.alekseyld.formulaconverter.adapter.FormulaAdapter;
 import com.alekseyld.formulaconverter.internal.di.component.MainComponent;
 import com.alekseyld.formulaconverter.presenter.FormulaListPresenter;
 import com.alekseyld.formulaconverter.view.FormulaListView;
@@ -27,6 +28,8 @@ public class FormulaListFragment extends BaseFragment<FormulaListPresenter> impl
     @BindView(R.id.formula_list)
     RecyclerView formulaList;
 
+    private FormulaAdapter mFormulaAdapter;
+
     public static FormulaListFragment newInstance(){
         return new FormulaListFragment();
     }
@@ -40,9 +43,23 @@ public class FormulaListFragment extends BaseFragment<FormulaListPresenter> impl
         getActivity().setTitle(R.string.app_name);
         getBaseActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
+        mFormulaAdapter = new FormulaAdapter();
+        formulaList.setAdapter(mFormulaAdapter);
         formulaList.setLayoutManager(new LinearLayoutManager(getContext()));
 
         return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        mPresenter.getFormulas();
+    }
+
+    @Override
+    public FormulaAdapter getAdapter() {
+        return mFormulaAdapter;
     }
 
     @OnClick(R.id.fab)

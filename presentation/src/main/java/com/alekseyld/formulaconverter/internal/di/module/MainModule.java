@@ -3,10 +3,10 @@ package com.alekseyld.formulaconverter.internal.di.module;
 import android.app.Activity;
 
 import com.alekseyld.formulaconverter.internal.di.PerActivity;
-import com.alekseyld.formulaconverter.repository.EntityRepositoryImpl;
-import com.alekseyld.formulaconverter.repository.base.EntityRepository;
-import com.alekseyld.formulaconverter.service.EntityService;
-import com.alekseyld.formulaconverter.service.EntityServiceImpl;
+import com.alekseyld.formulaconverter.repository.FormulaRepositoryImpl;
+import com.alekseyld.formulaconverter.repository.base.FormulaRepository;
+import com.alekseyld.formulaconverter.service.FormulaService;
+import com.alekseyld.formulaconverter.service.FormulaServiceImpl;
 
 import dagger.Module;
 import dagger.Provides;
@@ -31,12 +31,12 @@ public class MainModule {
     }
 
     @PerActivity @Provides
-    EntityService provideEntityService(EntityServiceImpl entityService){
+    FormulaService provideEntityService(FormulaServiceImpl entityService){
         return entityService;
     }
 
     @PerActivity @Provides
-    EntityRepository provideEntityRepository(EntityRepositoryImpl entityRepository){
+    FormulaRepository provideEntityRepository(FormulaRepositoryImpl entityRepository){
         return entityRepository;
     }
 }

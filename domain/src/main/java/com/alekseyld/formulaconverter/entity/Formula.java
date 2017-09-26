@@ -12,18 +12,18 @@ import java.util.Map;
 
 public class Formula {
 
+    private int id;
+
+    private String name;
+
     private String rawFormula;
-
-    private String viewFormula;
-
-    private String polishFormula;
 
     private FormulaChangeListener formulaChangeListener;
 
     private Map<String, BigDecimal> vars;
 
     public Formula(String rawFormula) {
-        this.rawFormula = rawFormula;
+        this.rawFormula = rawFormula.replace(" ", "");
     }
 
     public String getRawFormula() {
@@ -31,9 +31,7 @@ public class Formula {
     }
 
     public Formula setRawFormula(String rawFormula) {
-        this.rawFormula = rawFormula;
-        //// TODO: 24.09.2017
-        this.viewFormula = "$$" + rawFormula + "$$";
+        this.rawFormula = rawFormula.replace(" ", "");
 
         if (formulaChangeListener != null)
             formulaChangeListener.onFormulaChange(this);
@@ -42,12 +40,11 @@ public class Formula {
     }
 
     public String getViewFormula() {
-        return viewFormula;
+        return "$$" + rawFormula + "$$";
     }
 
-    public Formula setViewFormula(String viewFormula) {
-        this.viewFormula = viewFormula;
-        return this;
+    public String getViewInLineFormula() {
+        return "\\(" + rawFormula + "\\)";
     }
 
     public Map<String, BigDecimal> findVars(){
@@ -86,5 +83,23 @@ public class Formula {
                 .append("$$");
 
         return stringBuilder.toString();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public Formula setId(int id) {
+        this.id = id;
+        return this;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Formula setName(String name) {
+        this.name = name;
+        return this;
     }
 }
