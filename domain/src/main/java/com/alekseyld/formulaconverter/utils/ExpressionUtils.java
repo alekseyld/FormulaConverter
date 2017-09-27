@@ -7,6 +7,7 @@ package com.alekseyld.formulaconverter.utils;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -235,8 +236,10 @@ public class ExpressionUtils {
 
     public static BigDecimal calculateExpressionWithVar(String expression, Map<String, BigDecimal> vars) {
 
-        // FIXME: 26.09.2017 переменные v_2 и v
-        for (String varName: vars.keySet()){
+        ArrayList<String> keyList = new ArrayList<>(vars.keySet());
+        Collections.sort(keyList, new LenghtComparator());
+
+        for (String varName: keyList){
             expression = expression.replaceAll(varName, vars.get(varName).toString());
         }
 
