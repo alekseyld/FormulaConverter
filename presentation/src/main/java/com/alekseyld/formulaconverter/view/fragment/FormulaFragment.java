@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.alekseyld.formulaconverter.R;
 import com.alekseyld.formulaconverter.entity.Formula;
@@ -140,6 +141,11 @@ public class FormulaFragment extends BaseFragment<FormulaPresenter> implements F
 
         switch (item.getItemId()){
             case R.id.action_result:
+                if (mPresenter.getFormula().getRawFormula().equals("")){
+                    Toast.makeText(getContext(), "Проверьте правильность заполнения", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+
                 VariableDialogFragment groupInputDialogFragment = VariableDialogFragment.newInstance(mPresenter);
                 groupInputDialogFragment.setTargetFragment(this, 2);
                 groupInputDialogFragment.show(getFragmentManager(), VariableDialogFragment.class.getSimpleName());
