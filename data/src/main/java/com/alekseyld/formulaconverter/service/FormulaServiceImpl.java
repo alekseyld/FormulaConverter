@@ -42,4 +42,11 @@ public class FormulaServiceImpl implements FormulaService {
                 mFormulaRepository.getAll()
         );
     }
+
+    @Override
+    public Observable<Boolean> deleteFormula(Formula formula) {
+        return Observable.just(
+                mFormulaRepository.deleteFormula(formula)
+        );
+    }
 }

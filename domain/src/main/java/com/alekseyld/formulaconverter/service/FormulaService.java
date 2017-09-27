@@ -13,7 +13,8 @@ import rx.Observable;
 public interface FormulaService {
 
     Observable<Boolean> saveFormula(Formula formula);
+    Observable<Boolean> deleteFormula(Formula formula);
+
     Observable<Formula> getFormula(int id);
     Observable<List<Formula>> getAllFormulas();
-
 }

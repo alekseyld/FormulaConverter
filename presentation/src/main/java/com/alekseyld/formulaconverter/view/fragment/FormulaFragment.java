@@ -110,6 +110,7 @@ public class FormulaFragment extends BaseFragment<FormulaPresenter> implements F
         if (getArguments().getSerializable("formula") != null){
             mPresenter.setFormula((Formula) getArguments().getSerializable("formula"));
 
+            formulaNameEditText.setText(mPresenter.getFormula().getName());
             inputEditText.setText(mPresenter.getFormula().getRawFormula());
             mathView.setText(mPresenter.getFormula().getViewFormula());
 

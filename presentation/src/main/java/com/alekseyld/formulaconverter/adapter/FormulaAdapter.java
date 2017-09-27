@@ -39,10 +39,31 @@ public class FormulaAdapter extends RecyclerView.Adapter<FormulaViewHolder> {
     public void onBindViewHolder(FormulaViewHolder holder, int position) {
         final Formula formula = formulas.get(position);
 
-        holder.swipeLayout.setOnClickListener(new View.OnClickListener() {
+        holder.name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mPresenter.openFormulaFragment(true, formula);
+            }
+        });
+
+        holder.deleteImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.deleteFormula(formula);
+            }
+        });
+
+        holder.editImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.openFormulaFragment(false, formula);
+            }
+        });
+
+        holder.shareImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.shareFormula(formula);
             }
         });
 
@@ -57,13 +78,21 @@ public class FormulaAdapter extends RecyclerView.Adapter<FormulaViewHolder> {
 
     public void add(Formula formula){
         formulas.add(formula);
+        notifyDataSetChanged();
     }
 
     public void addAll(List<Formula> formulas){
         this.formulas.addAll(formulas);
+        notifyDataSetChanged();
+    }
+
+    public void remove(Formula formula){
+        this.formulas.remove(formula);
+        notifyDataSetChanged();
     }
 
     public void clear(){
         formulas.clear();
+        notifyDataSetChanged();
     }
 }

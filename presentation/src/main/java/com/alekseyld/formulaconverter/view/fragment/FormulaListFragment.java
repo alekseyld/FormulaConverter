@@ -29,6 +29,7 @@ public class FormulaListFragment extends BaseFragment<FormulaListPresenter> impl
     RecyclerView formulaList;
 
     private FormulaAdapter mFormulaAdapter;
+    private LinearLayoutManager mLinearLayoutManager;
 
     public static FormulaListFragment newInstance(){
         return new FormulaListFragment();
@@ -44,8 +45,8 @@ public class FormulaListFragment extends BaseFragment<FormulaListPresenter> impl
         getBaseActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         mFormulaAdapter = new FormulaAdapter();
-        formulaList.setAdapter(mFormulaAdapter);
         formulaList.setLayoutManager(new LinearLayoutManager(getContext()));
+        formulaList.setAdapter(mFormulaAdapter);
 
         return v;
     }
