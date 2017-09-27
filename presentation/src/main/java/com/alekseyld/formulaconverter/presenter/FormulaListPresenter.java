@@ -26,7 +26,7 @@ public class FormulaListPresenter extends BasePresenter<FormulaListView> {
 
     public void getFormulas() {
         mView.showLoading();
-        mGetAllFormulasUseCase.getUseCaseObservable().subscribe(new BaseSubscriber<List<Formula>>(){
+        mGetAllFormulasUseCase.execute(new BaseSubscriber<List<Formula>>(){
             @Override
             public void onNext(List<Formula> formulas) {
                 super.onNext(formulas);

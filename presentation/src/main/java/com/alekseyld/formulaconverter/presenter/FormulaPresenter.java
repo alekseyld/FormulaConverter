@@ -2,6 +2,8 @@ package com.alekseyld.formulaconverter.presenter;
 
 import com.alekseyld.formulaconverter.entity.Formula;
 import com.alekseyld.formulaconverter.presenter.base.BasePresenter;
+import com.alekseyld.formulaconverter.rx.subscriber.BaseSubscriber;
+import com.alekseyld.formulaconverter.usecase.SaveFormulaUseCase;
 import com.alekseyld.formulaconverter.view.FormulaView;
 
 import java.math.BigDecimal;
@@ -15,28 +17,47 @@ import javax.inject.Inject;
 
 public class FormulaPresenter extends BasePresenter<FormulaView> {
 
-    private Formula formula = new Formula("");
+    private Formula mFormula = new Formula("");
+
+    SaveFormulaUseCase mSaveFormulaUseCase;
 
     @Inject
-    FormulaPresenter(){
+    FormulaPresenter(SaveFormulaUseCase saveFormulaUseCase){
+        mSaveFormulaUseCase = saveFormulaUseCase;
     }
 
     public Map<String, BigDecimal> getVars(){
-        return formula.findVars();
+        return mFormula.findVars();
     }
 
     public void calculateExp(Map<String, BigDecimal> vars) {
 
-        formula.setVars(vars);
+        mFormula.setVars(vars);
 
-        mView.setMathView(formula.getStringResult());
+        mView.setMathView(mFormula.getStringResult());
     }
 
     public Formula getFormula() {
-        return formula;
+        return mFormula;
     }
 
     public void setFormula(Formula formula) {
-        this.formula = formula;
+        this.mFormula = formula;
+    }
+
+    public void saveFormula() {
+        mSaveFormulaUseCase.setFormula(mFormula).execute(new BaseSubscriber<Boolean>(){
+            @Override
+            public void onCompleted() {
+                super.onCompleted();
+                mView.onFormulaSave();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                mView.showError(e.getMessage());
+            }
+        });
     }
 }

@@ -6,4 +6,6 @@ package com.alekseyld.formulaconverter.view;
 
 public interface FormulaView extends BaseView {
     void setMathView(String s);
+
+    void onFormulaSave();
 }

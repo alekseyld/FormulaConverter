@@ -11,6 +11,8 @@ import java.util.List;
 public interface FormulaRepository {
 
     boolean saveFormula(Formula formula);
+    boolean deleteFormula(Formula formula);
+
     Formula getFormula(int id);
     List<Formula> getAll();
 

@@ -6,17 +6,23 @@
     android:layout_height="match_parent">
 
     <EditText
+        android:id="@+id/formula_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Название"
+        android:inputType="text" />
+
+    <EditText
         android:id="@+id/input_formula"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="Формула"
         android:inputType="text" />
 
     <io.github.kexanie.library.MathView
         android:id="@+id/formula_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        auto:engine="MathJax"
-        >
-    </io.github.kexanie.library.MathView>
+        auto:engine="MathJax"/>
 
 </LinearLayout>

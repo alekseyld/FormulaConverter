@@ -28,8 +28,4 @@ public class GetAllFormulasUseCase extends UseCase<FormulaService> {
     protected Observable<List<Formula>> buildUseCaseObservable() {
         return mService.getAllFormulas();
     }
-
-    public Observable<List<Formula>> getUseCaseObservable() {
-        return buildUseCaseObservable();
-    }
 }

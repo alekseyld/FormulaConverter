@@ -29,8 +29,8 @@ public class SaveFormulaUseCase extends UseCase<FormulaService> {
         return mService.saveFormula(formula);
     }
 
-    public Observable<Boolean> getUseCaseObservable(Formula formula) {
+    public SaveFormulaUseCase setFormula(Formula formula) {
         this.formula = formula;
-        return buildUseCaseObservable();
+        return this;
     }
 }

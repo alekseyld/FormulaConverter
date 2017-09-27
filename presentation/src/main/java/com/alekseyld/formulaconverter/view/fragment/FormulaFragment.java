@@ -34,6 +34,9 @@ public class FormulaFragment extends BaseFragment<FormulaPresenter> implements F
     @BindView(R.id.formula_view)
     MathView mathView;
 
+    @BindView(R.id.formula_name)
+    EditText formulaNameEditText;
+
     @BindView(R.id.input_formula)
     EditText inputEditText;
 
@@ -64,6 +67,7 @@ public class FormulaFragment extends BaseFragment<FormulaPresenter> implements F
 
         if (isView) {
             inputEditText.setEnabled(false);
+            formulaNameEditText.setEnabled(false);
         }
 
         Formula formula = (Formula) getArguments().getSerializable("formula");
@@ -87,7 +91,7 @@ public class FormulaFragment extends BaseFragment<FormulaPresenter> implements F
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                mPresenter.getFormula().setRawFormula(s.toString());
             }
         });
 
@@ -123,6 +127,10 @@ public class FormulaFragment extends BaseFragment<FormulaPresenter> implements F
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_formula, menu);
+
+        if (isView)
+            menu.findItem(R.id.action_save).setVisible(false);
+
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -135,9 +143,21 @@ public class FormulaFragment extends BaseFragment<FormulaPresenter> implements F
                 groupInputDialogFragment.setTargetFragment(this, 2);
                 groupInputDialogFragment.show(getFragmentManager(), VariableDialogFragment.class.getSimpleName());
                 break;
+
+            case R.id.action_save:
+                mPresenter.getFormula()
+                        .setName(formulaNameEditText.getText().toString());
+                mPresenter.saveFormula();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onFormulaSave() {
+        showError("Формула сохранена");
+        getBaseActivity().onBackPressed();
     }
 
     @Override

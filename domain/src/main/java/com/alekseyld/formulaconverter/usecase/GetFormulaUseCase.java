@@ -29,8 +29,8 @@ public class GetFormulaUseCase extends UseCase<FormulaService> {
         return mService.getFormula(id);
     }
 
-    public Observable<Formula> getUseCaseObservable(int id) {
+    public GetFormulaUseCase setId(int id) {
         this.id = id;
-        return buildUseCaseObservable();
+        return this;
     }
 }
