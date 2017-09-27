@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static com.alekseyld.formulaconverter.utils.ExpressionUtils.DECIMAL_PATTERN;
+
 /**
  * Created by Alekseyld on 25.09.2017.
  */
@@ -54,7 +56,9 @@ public class VariableAdapter extends RecyclerView.Adapter<VariableViewHolder> {
 
             @Override
             public void afterTextChanged(Editable s) {
-                vars.put(key, new BigDecimal(s.toString()));
+                if(DECIMAL_PATTERN.matcher(s.toString()).find()){
+                    vars.put(key, new BigDecimal(s.toString()));
+                }
             }
         });
 

@@ -53,8 +53,6 @@ public class VariableDialogFragment extends DialogFragment {
                 .setPositiveButton("Вычислить", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //// TODO: 25.09.2017 проверять на заполенение
-
                         mPresenter.calculateExp(mVariableAdapter.getVars());
                         dialog.cancel();
                     }

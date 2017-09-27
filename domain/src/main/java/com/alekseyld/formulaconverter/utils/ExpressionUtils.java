@@ -28,6 +28,15 @@ import ch.obermuhlner.math.big.BigDecimalMath;
 public class ExpressionUtils {
 
     public static final Pattern VAR_PATTERN = Pattern.compile("[A-Za-z][_0-9A-Za-z]{0,}");
+    public static final Pattern DECIMAL_PATTERN = Pattern.compile("\\d+(\\.\\d{1,})?");
+
+    public static final Map<String, String> MATH_TRANSFORM;
+
+    static {
+        MATH_TRANSFORM = new HashMap<String, String>();
+        MATH_TRANSFORM.put("lg(", " log 10");
+        MATH_TRANSFORM.put("ln(", " log 2.71828183");
+    }
 
     /**
      * Основные математические операции и их приоритеты.
@@ -38,6 +47,7 @@ public class ExpressionUtils {
 
     static {
         MAIN_MATH_OPERATIONS = new HashMap<String, Integer>();
+        MAIN_MATH_OPERATIONS.put("log", 1);
         MAIN_MATH_OPERATIONS.put("^", 1);
         MAIN_MATH_OPERATIONS.put("*", 2);
         MAIN_MATH_OPERATIONS.put("/", 2);
@@ -185,7 +195,7 @@ public class ExpressionUtils {
         String[] items = polishExpression.split(" ");
 
         for (String item: items){
-            if (VAR_PATTERN.matcher(item).find()){
+            if (VAR_PATTERN.matcher(item).find() && !item.equals("log")){
                 map.put(item, new BigDecimal(0));
             }
         }
@@ -218,6 +228,12 @@ public class ExpressionUtils {
                 BigDecimal operand1 = stack.empty() ? BigDecimal.ZERO : stack.pop();
                 if (token.equals("^")) {
                     stack.push(BigDecimalMath.pow(operand1, operand2, MathContext.DECIMAL32));
+                } else if (token.equals("log") && operand2.toString().equals("10")) {
+                    stack.push(BigDecimalMath.log10(operand1, MathContext.DECIMAL32));
+                } else if (token.equals("log") && operand2.toString().equals("2.71828183")){
+                    stack.push(BigDecimalMath.log(operand1, MathContext.DECIMAL32));
+                } else if (token.equals("log") && operand2.toString().equals("2")){
+                    stack.push(BigDecimalMath.log2(operand1, MathContext.DECIMAL32));
                 } else if (token.equals("*")) {
                     stack.push(operand1.multiply(operand2));
                 } else if (token.equals("/")) {

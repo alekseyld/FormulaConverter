@@ -1,5 +1,7 @@
 package com.alekseyld.formulaconverter.presenter;
 
+import android.widget.Toast;
+
 import com.alekseyld.formulaconverter.entity.Formula;
 import com.alekseyld.formulaconverter.presenter.base.BasePresenter;
 import com.alekseyld.formulaconverter.rx.subscriber.BaseSubscriber;
@@ -32,8 +34,14 @@ public class FormulaPresenter extends BasePresenter<FormulaView> {
 
     public void calculateExp(Map<String, BigDecimal> vars) {
 
-        mFormula.setVars(vars);
+        for(String key: vars.keySet()){
+            if (vars.get(key) == null){
+                Toast.makeText(mView.getContext(), "Проверьте правильность заполнения", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
 
+        mFormula.setVars(vars);
         mView.setMathView(mFormula.getStringResult());
     }
 
@@ -46,6 +54,11 @@ public class FormulaPresenter extends BasePresenter<FormulaView> {
     }
 
     public void saveFormula() {
+        if(mFormula.getName() == null || mFormula.getRawFormula().equals("")|| mFormula.getName().equals("")){
+            Toast.makeText(mView.getContext(), "Проверьте правильность заполнения", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         mSaveFormulaUseCase.setFormula(mFormula).execute(new BaseSubscriber<Boolean>(){
             @Override
             public void onCompleted() {
