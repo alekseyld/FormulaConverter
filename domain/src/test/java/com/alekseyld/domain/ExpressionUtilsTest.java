@@ -5,7 +5,6 @@ import com.alekseyld.formulaconverter.utils.ExpressionUtils;
 
 import org.junit.Test;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,28 +18,28 @@ public class ExpressionUtilsTest {
 
     @Test
     public void addition_isCorrect() throws Exception {
-        assertTrue(ExpressionUtils.calculateExpression("5 + 5").equals(new BigDecimal(10)));
-        assertTrue(ExpressionUtils.calculateExpression("5+5+3").equals(new BigDecimal(13)));
-        assertTrue(ExpressionUtils.calculateExpression("5+5+3/2").equals(new BigDecimal(11.5)));
-        assertTrue(ExpressionUtils.calculateExpression("5+5+3/2").equals(new BigDecimal(11.5)));
-        assertTrue(ExpressionUtils.calculateExpression("5-5").equals(new BigDecimal(0)));
-        assertTrue(ExpressionUtils.calculateExpression("5+5+3/2-1+1.5-4+5/1*5").toString().equals("33.0"));
-        assertTrue(ExpressionUtils.calculateExpression("5+5+3/2-1+1.5-4+5/1*5").toString().equals("33.0"));
-        assertTrue(ExpressionUtils.calculateExpression("(5+5)/5").toString().equals("2"));
-        assertTrue(ExpressionUtils.calculateExpression("2^2").toString().equals("4"));
+        assertTrue(ExpressionUtils.calculateExpression("5 + 5").equals(10d));
+        assertTrue(ExpressionUtils.calculateExpression("5+5+3").equals(13d));
+        assertTrue(ExpressionUtils.calculateExpression("5+5+3/2").equals(11.5d));
+        assertTrue(ExpressionUtils.calculateExpression("5+5+3/2").equals(11.5d));
+        assertTrue(ExpressionUtils.calculateExpression("5-5").equals(0d));
+        assertTrue(ExpressionUtils.calculateExpression("5+5+3/2-1+1.5-4+5/1*5").equals(33d));
+        assertTrue(ExpressionUtils.calculateExpression("5+5+3/2-1+1.5-4+5/1*5").equals(33d));
+        assertTrue(ExpressionUtils.calculateExpression("(5+5)/5").equals(2d));
+        assertTrue(ExpressionUtils.calculateExpression("2^2").equals(4d));
 
-        final Map<String, BigDecimal> vars = new HashMap<>();
-        vars.put("a", new BigDecimal(10));
-        vars.put("b", new BigDecimal(2));
+        final Map<String, Double> vars = new HashMap<>();
+        vars.put("a", 10d);
+        vars.put("b", 2d);
 
-        assertTrue(ExpressionUtils.calculateExpressionWithVar("2^a", vars).toString().equals("1024"));
-        assertTrue(ExpressionUtils.calculateExpressionWithVar("2^a*b+4^(1/2)", vars).toString().equals("2050.000"));
-        assertTrue(ExpressionUtils.calculateExpression("4^(1/2)").toString().equals("2.000000"));
-        assertTrue(ExpressionUtils.calculateExpression("2^10*2+4^(1/2)").toString().equals("2050.000"));
+        assertTrue(ExpressionUtils.calculateExpressionWithVar("2^a", vars).equals(1024d));
+        assertTrue(ExpressionUtils.calculateExpressionWithVar("2^a*b+4^(1/2)", vars).equals(2050d));
+        assertTrue(ExpressionUtils.calculateExpression("4^(1/2)").equals(2d));
+        assertTrue(ExpressionUtils.calculateExpression("2^10*2+4^(1/2)").equals(2050d));
 
-        assertTrue(ExpressionUtils.calculateExpression("2 log 2").toString().equals("1"));
-        assertTrue(ExpressionUtils.calculateExpression("1 log 2.71828183").toString().equals("0"));
-        assertTrue(ExpressionUtils.calculateExpression("(1) log 2.71828183").toString().equals("0"));
+        assertTrue(ExpressionUtils.calculateExpression("2 log 2").equals(1d));
+        assertTrue(ExpressionUtils.calculateExpression("1 log 2.71828183").equals(0d));
+        assertTrue(ExpressionUtils.calculateExpression("(1) log 2.71828183").equals(0d));
 
         Formula formula = new Formula("");
         formula.setRawFormula("5 + lg(5) * x");

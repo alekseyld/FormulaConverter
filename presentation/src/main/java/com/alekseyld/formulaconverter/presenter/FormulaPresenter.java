@@ -6,7 +6,6 @@ import com.alekseyld.formulaconverter.rx.subscriber.BaseSubscriber;
 import com.alekseyld.formulaconverter.usecase.SaveFormulaUseCase;
 import com.alekseyld.formulaconverter.view.FormulaView;
 
-import java.math.BigDecimal;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -26,11 +25,11 @@ public class FormulaPresenter extends BasePresenter<FormulaView> {
         mSaveFormulaUseCase = saveFormulaUseCase;
     }
 
-    public Map<String, BigDecimal> getVars(){
+    public Map<String, Double> getVars(){
         return mFormula.findVars();
     }
 
-    public void calculateExp(Map<String, BigDecimal> vars) {
+    public void calculateExp(Map<String, Double> vars) {
 
         for(String key: vars.keySet()){
             if (vars.get(key) == null){
