@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import com.alekseyld.formulaconverter.R;
 import com.alekseyld.formulaconverter.adapter.holder.VariableViewHolder;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +23,7 @@ import static com.alekseyld.formulaconverter.utils.ExpressionUtils.DECIMAL_PATTE
 public class VariableAdapter extends RecyclerView.Adapter<VariableViewHolder> {
 
     private List<String> keys;
-    private Map<String, BigDecimal> vars;
+    private Map<String, Double> vars;
 
     @Override
     public VariableViewHolder onCreateViewHolder(ViewGroup parent,
@@ -57,7 +56,7 @@ public class VariableAdapter extends RecyclerView.Adapter<VariableViewHolder> {
             @Override
             public void afterTextChanged(Editable s) {
                 if(DECIMAL_PATTERN.matcher(s.toString()).find()){
-                    vars.put(key, new BigDecimal(s.toString()));
+                    vars.put(key, Double.parseDouble(s.toString()));
                 }
             }
         });
@@ -69,12 +68,12 @@ public class VariableAdapter extends RecyclerView.Adapter<VariableViewHolder> {
         return vars.size();
     }
 
-    public void setVars(Map<String, BigDecimal> vars) {
+    public void setVars(Map<String, Double> vars) {
         this.vars = vars;
         this.keys = new ArrayList<>(vars.keySet());
     }
 
-    public Map<String, BigDecimal> getVars() {
+    public Map<String, Double> getVars() {
         return vars;
     }
 }

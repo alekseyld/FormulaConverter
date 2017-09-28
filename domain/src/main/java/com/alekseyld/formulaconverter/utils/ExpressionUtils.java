@@ -4,8 +4,6 @@ package com.alekseyld.formulaconverter.utils;
  * Created by Alekseyld on 24.09.2017.
  */
 
-import java.math.BigDecimal;
-import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -16,8 +14,6 @@ import java.util.Set;
 import java.util.Stack;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
-
-import ch.obermuhlner.math.big.BigDecimalMath;
 
 /**
  * Класс содержит утилиты для разбора и обработки математических выражений.
@@ -188,15 +184,15 @@ public class ExpressionUtils {
         return sortingStation(expression, operations, "(", ")");
     }
 
-    public static Map<String, BigDecimal> getVars(String polishExpression){
+    public static Map<String, Double> getVars(String polishExpression){
 
-        Map<String, BigDecimal> map = new HashMap<>();
+        Map<String, Double> map = new HashMap<>();
 
         String[] items = polishExpression.split(" ");
 
         for (String item: items){
             if (VAR_PATTERN.matcher(item).find() && !item.equals("log")){
-                map.put(item, new BigDecimal(0));
+                map.put(item, 0d);
             }
         }
 
@@ -214,34 +210,40 @@ public class ExpressionUtils {
      * @param expression выражение.
      * @return результат вычисления.
      */
-    public static BigDecimal calculateExpression(String expression) {
+    public static Double calculateExpression(String expression) {
         String rpn = sortingStation(expression, MAIN_MATH_OPERATIONS);
         StringTokenizer tokenizer = new StringTokenizer(rpn, " ");
-        Stack<BigDecimal> stack = new Stack<BigDecimal>();
+        Stack<Double> stack = new Stack<Double>();
         while (tokenizer.hasMoreTokens()) {
             String token = tokenizer.nextToken();
             // Операнд.
             if (!MAIN_MATH_OPERATIONS.keySet().contains(token)) {
-                stack.push(new BigDecimal(token));
+                stack.push(Double.parseDouble(token));
             } else {
-                BigDecimal operand2 = stack.pop();
-                BigDecimal operand1 = stack.empty() ? BigDecimal.ZERO : stack.pop();
-                if (token.equals("^")) {
-                    stack.push(BigDecimalMath.pow(operand1, operand2, MathContext.DECIMAL32));
-                } else if (token.equals("log") && operand2.toString().equals("10")) {
-                    stack.push(BigDecimalMath.log10(operand1, MathContext.DECIMAL32));
-                } else if (token.equals("log") && operand2.toString().equals("2.71828183")){
-                    stack.push(BigDecimalMath.log(operand1, MathContext.DECIMAL32));
-                } else if (token.equals("log") && operand2.toString().equals("2")){
-                    stack.push(BigDecimalMath.log2(operand1, MathContext.DECIMAL32));
-                } else if (token.equals("*")) {
-                    stack.push(operand1.multiply(operand2, MathContext.DECIMAL32));
-                } else if (token.equals("/")) {
-                    stack.push(operand1.divide(operand2, MathContext.DECIMAL32));
-                } else if (token.equals("+")) {
-                    stack.push(operand1.add(operand2, MathContext.DECIMAL32));
-                } else if (token.equals("-")) {
-                    stack.push(operand1.subtract(operand2, MathContext.DECIMAL32));
+                Double operand2 = stack.pop();
+                Double operand1 = stack.empty() ? 0d : stack.pop();
+                switch (token) {
+                    case "^":
+                        stack.push(Math.pow(operand1, operand2));
+                        break;
+                    case "log":
+                        if (operand2.toString().equals("2.71828183"))
+                            stack.push(Math.log(operand1));
+                        else
+                            stack.push(Math.log(operand1) / Math.log(operand2));
+                        break;
+                    case "*":
+                        stack.push(operand1 * operand2);
+                        break;
+                    case "/":
+                        stack.push(operand1 / operand2);
+                        break;
+                    case "+":
+                        stack.push(operand1 + operand2);
+                        break;
+                    case "-":
+                        stack.push(operand1 - operand2);
+                        break;
                 }
             }
         }
@@ -250,7 +252,7 @@ public class ExpressionUtils {
         return stack.pop();
     }
 
-    public static BigDecimal calculateExpressionWithVar(String expression, Map<String, BigDecimal> vars) {
+    public static Double calculateExpressionWithVar(String expression, Map<String, Double> vars) {
 
         ArrayList<String> keyList = new ArrayList<>(vars.keySet());
         Collections.sort(keyList, new LenghtComparator());

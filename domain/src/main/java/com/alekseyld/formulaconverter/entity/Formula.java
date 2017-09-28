@@ -4,7 +4,6 @@ import com.alekseyld.formulaconverter.listeners.FormulaChangeListener;
 import com.alekseyld.formulaconverter.utils.ExpressionUtils;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Map;
 
 import static com.alekseyld.formulaconverter.utils.ExpressionUtils.MATH_TRANSFORM;
@@ -23,7 +22,7 @@ public class Formula implements Serializable {
 
     private FormulaChangeListener formulaChangeListener;
 
-    private Map<String, BigDecimal> vars;
+    private Map<String, Double> vars;
 
     public Formula(String rawFormula) {
         this.rawFormula = rawFormula.replace(" ", "");
@@ -50,17 +49,17 @@ public class Formula implements Serializable {
         return "\\(" + rawFormula + "\\)";
     }
 
-    public Map<String, BigDecimal> findVars() {
+    public Map<String, Double> findVars() {
         this.vars = ExpressionUtils.getVars(ExpressionUtils.sortingStation(formatFormula(rawFormula)));
 
         return vars;
     }
 
-    public Map<String, BigDecimal> getVars() {
+    public Map<String, Double> getVars() {
         return vars;
     }
 
-    public Formula setVars(Map<String, BigDecimal> vars) {
+    public Formula setVars(Map<String, Double> vars) {
         this.vars = vars;
         return this;
     }
