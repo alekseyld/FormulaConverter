@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.alekseyld.formulaconverter.R;
 import com.alekseyld.formulaconverter.adapter.FormulaAdapter;
@@ -27,6 +28,9 @@ public class FormulaListFragment extends BaseFragment<FormulaListPresenter> impl
 
     @BindView(R.id.formula_list)
     RecyclerView formulaList;
+
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
 
     private FormulaAdapter mFormulaAdapter;
     private LinearLayoutManager mLinearLayoutManager;
@@ -71,12 +75,14 @@ public class FormulaListFragment extends BaseFragment<FormulaListPresenter> impl
 
     @Override
     public void showLoading() {
-
+        progressBar.setVisibility(View.VISIBLE);
+        formulaList.setVisibility(View.GONE);
     }
 
     @Override
     public void hideLoading() {
-
+        progressBar.setVisibility(View.GONE);
+        formulaList.setVisibility(View.VISIBLE);
     }
 
     @Override

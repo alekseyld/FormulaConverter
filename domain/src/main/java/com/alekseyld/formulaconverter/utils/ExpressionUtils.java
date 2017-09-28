@@ -235,13 +235,13 @@ public class ExpressionUtils {
                 } else if (token.equals("log") && operand2.toString().equals("2")){
                     stack.push(BigDecimalMath.log2(operand1, MathContext.DECIMAL32));
                 } else if (token.equals("*")) {
-                    stack.push(operand1.multiply(operand2));
+                    stack.push(operand1.multiply(operand2, MathContext.DECIMAL32));
                 } else if (token.equals("/")) {
-                    stack.push(operand1.divide(operand2));
+                    stack.push(operand1.divide(operand2, MathContext.DECIMAL32));
                 } else if (token.equals("+")) {
-                    stack.push(operand1.add(operand2));
+                    stack.push(operand1.add(operand2, MathContext.DECIMAL32));
                 } else if (token.equals("-")) {
-                    stack.push(operand1.subtract(operand2));
+                    stack.push(operand1.subtract(operand2, MathContext.DECIMAL32));
                 }
             }
         }

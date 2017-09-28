@@ -34,13 +34,13 @@ public class ExpressionUtilsTest {
         vars.put("b", new BigDecimal(2));
 
         assertTrue(ExpressionUtils.calculateExpressionWithVar("2^a", vars).toString().equals("1024"));
-        assertTrue(ExpressionUtils.calculateExpressionWithVar("2^a*b+4^(1/2)", vars).toString().equals("2050.000000"));
+        assertTrue(ExpressionUtils.calculateExpressionWithVar("2^a*b+4^(1/2)", vars).toString().equals("2050.000"));
         assertTrue(ExpressionUtils.calculateExpression("4^(1/2)").toString().equals("2.000000"));
-        assertTrue(ExpressionUtils.calculateExpression("2^10*2+4^(1/2)").toString().equals("2050.000000"));
+        assertTrue(ExpressionUtils.calculateExpression("2^10*2+4^(1/2)").toString().equals("2050.000"));
 
         assertTrue(ExpressionUtils.calculateExpression("2 log 2").toString().equals("1"));
-        assertTrue(ExpressionUtils.calculateExpression("1 log 2.71").toString().equals("0"));
-        assertTrue(ExpressionUtils.calculateExpression("(1) log 2.71").toString().equals("0"));
+        assertTrue(ExpressionUtils.calculateExpression("1 log 2.71828183").toString().equals("0"));
+        assertTrue(ExpressionUtils.calculateExpression("(1) log 2.71828183").toString().equals("0"));
 
         Formula formula = new Formula("");
         formula.setRawFormula("5 + lg(5) * x");

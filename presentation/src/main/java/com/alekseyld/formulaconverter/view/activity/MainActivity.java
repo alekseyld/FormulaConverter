@@ -1,7 +1,6 @@
 package com.alekseyld.formulaconverter.view.activity;
 
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -18,8 +17,8 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends BaseInjectorActivity<MainComponent> {
 
-    @BindView(R.id.nav_view)
-    NavigationView navigation;
+//    @BindView(R.id.nav_view)
+//    NavigationView navigation;
 
     @BindView(R.id.drawer)
     DrawerLayout drawer;
