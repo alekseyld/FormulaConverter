@@ -75,11 +75,17 @@ public class BluetoothDialogFragment extends BaseDialogFragment<BluetoothPresent
         View v = inflater.inflate(R.layout.dialog_bluetooth, null);
         ButterKnife.bind(this, v);
 
-        if (formula == null){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
+                .setView(v)
+                .setCancelable(false);
+
+        if (formula == null) {
             sendLL.setVisibility(View.GONE);
-        } else {
-            buttonMakeVisible.setVisibility(View.GONE);
+
+            return builder.setTitle("Получение формулы").create();
         }
+
+        buttonMakeVisible.setVisibility(View.GONE);
 
         discoveredDevices = new ArrayList<>();
 
@@ -94,21 +100,19 @@ public class BluetoothDialogFragment extends BaseDialogFragment<BluetoothPresent
         };
         devicesList.setAdapter(listAdapter);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
-                .setView(v)
+        builder.setTitle("Отправка формулы")
                 .setPositiveButton("Отправить формулу", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        sendMessage();
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                sendMessage();
+                dialog.cancel();
+            }}).setNegativeButton("Отмена",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }
-                })
-                .setNegativeButton("Отмена",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
+                });
+
 
         return builder.create();
     }
@@ -134,15 +138,17 @@ public class BluetoothDialogFragment extends BaseDialogFragment<BluetoothPresent
                 ((BluetoothManager) getContext().getSystemService(Context.BLUETOOTH_SERVICE)).getAdapter()
         );
 
-        discoveredDevices.clear();
-        listAdapter.notifyDataSetChanged();
+        if (formula != null) {
+            discoveredDevices.clear();
+            listAdapter.notifyDataSetChanged();
 
-        devicesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mPresenter.onDeviceSelect(discoveredDevices.get(position));
-            }
-        });
+            devicesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    mPresenter.onDeviceSelect(discoveredDevices.get(position));
+                }
+            });
+        }
 
         super.onResume();
     }
@@ -160,9 +166,15 @@ public class BluetoothDialogFragment extends BaseDialogFragment<BluetoothPresent
     public void findDevices() {
         discoveredDevices.clear();
         listAdapter.notifyDataSetChanged();
-        devicesList.setEnabled(false);
 
         mPresenter.findDevices();
+    }
+
+    @Override
+    public void onFormulaReceivedAndSave() {
+        getTargetFragment().onResume();
+        showToastMessage("Формула успешно получена");
+        getDialog().cancel();
     }
 
     @Override
@@ -173,13 +185,13 @@ public class BluetoothDialogFragment extends BaseDialogFragment<BluetoothPresent
     @Override
     public void showLoading() {
         progressBar.setVisibility(View.VISIBLE);
+        devicesList.setVisibility(View.GONE);
     }
 
     @Override
     public void hideLoading() {
         progressBar.setVisibility(View.GONE);
-        progressBar.animate();
-        devicesList.setEnabled(true);
+        devicesList.setVisibility(View.VISIBLE);
     }
 
     @Override

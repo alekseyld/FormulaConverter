@@ -11,4 +11,5 @@ public interface BluetoothView extends BaseView {
 
     ArrayAdapter<BluetoothDevice> getAdapter();
 
+    void onFormulaReceivedAndSave();
 }

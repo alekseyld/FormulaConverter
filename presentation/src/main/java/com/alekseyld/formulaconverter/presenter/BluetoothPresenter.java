@@ -55,8 +55,6 @@ public class BluetoothPresenter extends BasePresenter<BluetoothView> {
     @Inject
     BluetoothPresenter(SaveFormulaUseCase saveFormulaUseCase) {
         mSaveFormulaUseCase = saveFormulaUseCase;
-
-
         mCommunicatorService = new CommunicatorService() {
             @Override
             public Communicator createCommunicatorThread(BluetoothSocket socket) {
@@ -78,6 +76,9 @@ public class BluetoothPresenter extends BasePresenter<BluetoothView> {
     @Override
     public void resume() {
         super.resume();
+
+        if (!mBluetoothAdapter.isEnabled())
+            requestEnableBluetooth();
 
         mServerThread = new ServerThread(mCommunicatorService);
         mServerThread.start();
@@ -147,8 +148,8 @@ public class BluetoothPresenter extends BasePresenter<BluetoothView> {
 
                     mView.getBaseActivity().unregisterReceiver(mDiscoveryFinishedReceiver);
                     mBluetoothAdapter.cancelDiscovery();
-                }
-            };
+        }
+    };
         }
 
         mView.getBaseActivity().registerReceiver(mDiscoverDevicesReceiver, new IntentFilter(BluetoothDevice.ACTION_FOUND));
@@ -176,12 +177,18 @@ public class BluetoothPresenter extends BasePresenter<BluetoothView> {
         }
     }
 
+    private void requestEnableBluetooth(){
+        Intent i = new Intent(
+                BluetoothAdapter.ACTION_REQUEST_ENABLE);
+        mView.getBaseActivity().startActivity(i);
+    }
 
     public void makeVisible() {
         Intent i = new Intent(
                 BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
         i.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
         mView.getBaseActivity().startActivity(i);
+        mView.showLoading();
     }
 
     private void onFormulaReceived(String jsonFormula) {
@@ -191,11 +198,13 @@ public class BluetoothPresenter extends BasePresenter<BluetoothView> {
             public void onCompleted() {
                 super.onCompleted();
                 Log.d("BluetoothPresenter", "formula saved");
+                mView.onFormulaReceivedAndSave();
             }
 
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
+                mView.showError(e.getMessage());
                 e.printStackTrace();
             }
         });

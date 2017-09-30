@@ -7,6 +7,7 @@ import com.alekseyld.formulaconverter.usecase.DeleteFormulaUseCase;
 import com.alekseyld.formulaconverter.usecase.GetAllFormulasUseCase;
 import com.alekseyld.formulaconverter.view.FormulaListView;
 import com.alekseyld.formulaconverter.view.fragment.FormulaFragment;
+import com.alekseyld.formulaconverter.view.fragment.FormulaListFragment;
 import com.alekseyld.formulaconverter.view.fragment.dialog.BluetoothDialogFragment;
 
 import java.util.List;
@@ -19,8 +20,8 @@ import javax.inject.Inject;
 
 public class FormulaListPresenter extends BasePresenter<FormulaListView> {
 
-    GetAllFormulasUseCase mGetAllFormulasUseCase;
-    DeleteFormulaUseCase mDeleteFormulaUseCase;
+    private GetAllFormulasUseCase mGetAllFormulasUseCase;
+    private DeleteFormulaUseCase mDeleteFormulaUseCase;
 
     @Inject
     FormulaListPresenter(GetAllFormulasUseCase getAllFormulasUseCase,
@@ -67,8 +68,9 @@ public class FormulaListPresenter extends BasePresenter<FormulaListView> {
         });
     }
 
-    public void shareFormula(Formula formula) {
+    public void shareFormula(Formula formula, FormulaListFragment fragment) {
         BluetoothDialogFragment bluetoothDialogFragment = BluetoothDialogFragment.newInstance(formula);
-        bluetoothDialogFragment.show(mView.getBaseActivity().getFragmentManager(), BluetoothDialogFragment.class.getSimpleName());
+        bluetoothDialogFragment.setTargetFragment(fragment, 1);
+        bluetoothDialogFragment.show(mView.getBaseActivity().getSupportFragmentManager(), BluetoothDialogFragment.class.getSimpleName());
     }
 }

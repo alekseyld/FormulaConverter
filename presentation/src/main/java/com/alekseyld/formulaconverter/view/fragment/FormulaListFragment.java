@@ -63,6 +63,7 @@ public class FormulaListFragment extends BaseFragment<FormulaListPresenter> impl
         super.onResume();
 
         mFormulaAdapter.setPresenter(mPresenter);
+        mFormulaAdapter.setFragment(this);
         mPresenter.getFormulas();
     }
 
@@ -78,7 +79,7 @@ public class FormulaListFragment extends BaseFragment<FormulaListPresenter> impl
 
         switch (item.getItemId()){
             case R.id.action_get_formula:
-                mPresenter.shareFormula(null);
+                mPresenter.shareFormula(null, this);
                 break;
         }
 

@@ -9,6 +9,7 @@ import com.alekseyld.formulaconverter.R;
 import com.alekseyld.formulaconverter.adapter.holder.FormulaViewHolder;
 import com.alekseyld.formulaconverter.entity.Formula;
 import com.alekseyld.formulaconverter.presenter.FormulaListPresenter;
+import com.alekseyld.formulaconverter.view.fragment.FormulaListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ public class FormulaAdapter extends RecyclerView.Adapter<FormulaViewHolder> {
     private FormulaListPresenter mPresenter;
 
     private List<Formula> formulas = new ArrayList<>();
+    private FormulaListFragment fragment;
 
     public void setPresenter(FormulaListPresenter mPresenter) {
         this.mPresenter = mPresenter;
@@ -63,7 +65,7 @@ public class FormulaAdapter extends RecyclerView.Adapter<FormulaViewHolder> {
         holder.shareImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.shareFormula(formula);
+                mPresenter.shareFormula(formula, fragment);
             }
         });
 
@@ -94,5 +96,9 @@ public class FormulaAdapter extends RecyclerView.Adapter<FormulaViewHolder> {
     public void clear(){
         formulas.clear();
         notifyDataSetChanged();
+    }
+
+    public void setFragment(FormulaListFragment fragment) {
+        this.fragment = fragment;
     }
 }

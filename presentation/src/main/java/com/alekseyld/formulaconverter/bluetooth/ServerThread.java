@@ -53,7 +53,7 @@ public class ServerThread extends Thread {
     public void cancel() {
         try {
             bluetoothServerSocket.close();
-        } catch (IOException e) {
+        } catch (NullPointerException | IOException e) {
             Log.d("ServerThread", e.getLocalizedMessage());
         }
     }
