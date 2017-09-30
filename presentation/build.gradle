@@ -7,8 +7,8 @@ android {
         applicationId "com.alekseyld.formulaconverter"
         minSdkVersion 18
         targetSdkVersion 25
-        versionCode 3
-        versionName "1.3_beta"
+        versionCode 4
+        versionName "1.4_beta"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         jackOptions {
             enabled true
