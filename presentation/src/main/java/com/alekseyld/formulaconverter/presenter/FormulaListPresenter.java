@@ -7,6 +7,7 @@ import com.alekseyld.formulaconverter.usecase.DeleteFormulaUseCase;
 import com.alekseyld.formulaconverter.usecase.GetAllFormulasUseCase;
 import com.alekseyld.formulaconverter.view.FormulaListView;
 import com.alekseyld.formulaconverter.view.fragment.FormulaFragment;
+import com.alekseyld.formulaconverter.view.fragment.dialog.BluetoothDialogFragment;
 
 import java.util.List;
 
@@ -67,7 +68,7 @@ public class FormulaListPresenter extends BasePresenter<FormulaListView> {
     }
 
     public void shareFormula(Formula formula) {
-        //// TODO: 27.09.2017 реализовать шаринг
-        mView.showError("Поделиться не реализовано");
+        BluetoothDialogFragment bluetoothDialogFragment = BluetoothDialogFragment.newInstance(formula);
+        bluetoothDialogFragment.show(mView.getBaseActivity().getFragmentManager(), BluetoothDialogFragment.class.getSimpleName());
     }
 }

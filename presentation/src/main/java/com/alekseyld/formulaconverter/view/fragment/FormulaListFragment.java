@@ -5,6 +5,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -33,7 +36,6 @@ public class FormulaListFragment extends BaseFragment<FormulaListPresenter> impl
     ProgressBar progressBar;
 
     private FormulaAdapter mFormulaAdapter;
-    private LinearLayoutManager mLinearLayoutManager;
 
     public static FormulaListFragment newInstance(){
         return new FormulaListFragment();
@@ -47,6 +49,7 @@ public class FormulaListFragment extends BaseFragment<FormulaListPresenter> impl
 
         getActivity().setTitle(R.string.app_name);
         getBaseActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        setHasOptionsMenu(true);
 
         mFormulaAdapter = new FormulaAdapter();
         formulaList.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -61,6 +64,25 @@ public class FormulaListFragment extends BaseFragment<FormulaListPresenter> impl
 
         mFormulaAdapter.setPresenter(mPresenter);
         mPresenter.getFormulas();
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_formula_list, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.action_get_formula:
+                mPresenter.shareFormula(null);
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
