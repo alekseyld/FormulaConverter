@@ -24,6 +24,7 @@ import com.alekseyld.formulaconverter.view.fragment.dialog.VariableDialogFragmen
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.github.kexanie.library.MathView;
 
 /**
@@ -140,17 +141,6 @@ public class FormulaFragment extends BaseFragment<FormulaPresenter> implements F
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()){
-            case R.id.action_result:
-                if (mPresenter.getFormula().getRawFormula().equals("")){
-                    Toast.makeText(getContext(), "Проверьте правильность заполнения", Toast.LENGTH_SHORT).show();
-                    break;
-                }
-
-                VariableDialogFragment groupInputDialogFragment = VariableDialogFragment.newInstance(mPresenter);
-                groupInputDialogFragment.setTargetFragment(this, 2);
-                groupInputDialogFragment.show(getFragmentManager(), VariableDialogFragment.class.getSimpleName());
-                break;
-
             case R.id.action_save:
                 mPresenter.getFormula()
                         .setName(formulaNameEditText.getText().toString());
@@ -165,6 +155,18 @@ public class FormulaFragment extends BaseFragment<FormulaPresenter> implements F
     public void onFormulaSave() {
         showError("Формула сохранена");
         getBaseActivity().onBackPressed();
+    }
+
+    @OnClick(R.id.button_calculate)
+    void onButtonCalculateClick(){
+        if (mPresenter.getFormula().getRawFormula().equals("")){
+            Toast.makeText(getContext(), "Проверьте правильность заполнения", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        VariableDialogFragment groupInputDialogFragment = VariableDialogFragment.newInstance(mPresenter);
+        groupInputDialogFragment.setTargetFragment(this, 2);
+        groupInputDialogFragment.show(getFragmentManager(), VariableDialogFragment.class.getSimpleName());
     }
 
     @Override

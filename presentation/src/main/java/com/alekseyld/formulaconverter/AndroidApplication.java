@@ -14,6 +14,8 @@ import com.raizlabs.android.dbflow.config.FlowManager;
 
 public class AndroidApplication extends Application {
 
+    public final static String UUID = "b006b88e-a5d2-11e7-abc4-cec278b6b50a";
+
     private ApplicationComponent applicationComponent;
 
     @Override public void onCreate() {

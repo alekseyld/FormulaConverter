@@ -4,6 +4,7 @@ import com.alekseyld.formulaconverter.internal.di.PerActivity;
 import com.alekseyld.formulaconverter.internal.di.module.MainModule;
 import com.alekseyld.formulaconverter.view.fragment.FormulaFragment;
 import com.alekseyld.formulaconverter.view.fragment.FormulaListFragment;
+import com.alekseyld.formulaconverter.view.fragment.dialog.BluetoothDialogFragment;
 
 import dagger.Component;
 
@@ -16,4 +17,6 @@ import dagger.Component;
 public interface MainComponent {
     void inject(FormulaFragment formulaFragment);
     void inject(FormulaListFragment fragment);
+
+    void inject(BluetoothDialogFragment dialogFragment);
 }
